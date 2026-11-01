@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Produtos · Mercado Inteligente{% endblock %}
+{% block content %}
+<h1>Produtos</h1>
+<p class="muted">Cadastre e consulte os produtos acompanhados pelo sistema.</p>
+{% if request.query_params.get('erro') == 'duplicado' %}
+<p class="notice">Já existe um produto com esse nome.</p>
+{% endif %}
+<section class="panel">
+  <h2>Novo produto</h2>
+  <form method="post" action="/produtos" class="form-grid">
+    <label>Nome<input name="name" maxlength="120" required></label>
+    <label>Categoria<input name="category" maxlength="80" required></label>
+    <label>Unidade<input name="unit" maxlength="20" value="unidade" required></label>
+    <button type="submit">Cadastrar produto</button>
+  </form>
+</section>
+<section class="panel">
+  <h2>Produtos cadastrados</h2>
+  {% if products %}
+  <div class="table-wrap"><table><thead><tr><th>Produto</th><th>Categoria</th><th>Unidade</th></tr></thead>
+  <tbody>{% for product in products %}<tr><td>{{ product.name }}</td><td>{{ product.category }}</td><td>{{ product.unit }}</td></tr>{% endfor %}</tbody></table></div>
+  {% else %}<p class="muted">Nenhum produto cadastrado.</p>{% endif %}
+</section>
+{% endblock %}

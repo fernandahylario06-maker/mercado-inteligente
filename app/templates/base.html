@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Mercado Inteligente{% endblock %}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">Mercado Inteligente</a>
+  <nav aria-label="Navegação principal">
+    <a href="/produtos">Produtos</a>
+    <a href="/movimentacoes">Movimentações</a>
+    <a href="/alertas">Validade</a>
+  </nav>
+</header>
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
+<footer>Projeto acadêmico · MVP Mercado Inteligente</footer>
+</body>
+</html>
