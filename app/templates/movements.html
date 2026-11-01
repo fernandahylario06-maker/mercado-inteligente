@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Movimentações · Mercado Inteligente{% endblock %}
+{% block content %}
+<h1>Lotes e movimentações</h1>
+<p class="muted">Registre o recebimento de lotes e as entradas e saídas de estoque.</p>
+{% if error %}<p class="notice">Não foi possível concluir. Verifique os dados e o saldo do lote.</p>{% endif %}
+<section class="panel">
+<h2>Novo lote</h2>
+{% if products %}
+<form method="post" action="/lotes" class="form-grid">
+<label>Produto<select name="product_id" required>{% for p in products %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}</select></label>
+<label>Código do lote<input name="code" required maxlength="60"></label>
+<label>Quantidade inicial<input type="number" name="quantity" min="0" required></label>
+<label>Data de recebimento<input type="date" name="received_at" required></label>
+<label>Validade<input type="date" name="expires_at" required></label>
+<button type="submit">Cadastrar lote</button>
+</form>
+{% else %}<p>Cadastre um produto antes de criar um lote.</p>{% endif %}
+</section>
+<section class="panel">
+<h2>Registrar movimentação</h2>
+{% if batches %}
+<form method="post" action="/movimentacoes" class="form-grid">
+<label>Lote<select name="batch_id" required>{% for b in batches %}<option value="{{ b.id }}">{{ b.product.name }} · {{ b.code }} · saldo {{ b.quantity }}</option>{% endfor %}</select></label>
+<label>Tipo<select name="movement_type"><option value="entrada">Entrada</option><option value="saida">Saída</option></select></label>
+<label>Quantidade<input type="number" name="quantity" min="1" required></label>
+<label>Observação<input name="notes" maxlength="250"></label>
+<button type="submit">Registrar</button>
+</form>
+{% else %}<p>Cadastre um lote para registrar movimentações.</p>{% endif %}
+</section>
+<section class="panel">
+<h2>Histórico</h2>
+{% if movements %}<div class="table-wrap"><table><thead><tr><th>Data</th><th>Produto</th><th>Lote</th><th>Tipo</th><th>Quantidade</th></tr></thead><tbody>
+{% for m in movements %}<tr><td>{{ m.occurred_at.strftime('%d/%m/%Y %H:%M') }}</td><td>{{ m.product.name }}</td><td>{{ m.batch.code }}</td><td>{{ m.movement_type }}</td><td>{{ m.quantity }}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="muted">Nenhuma movimentação registrada.</p>{% endif %}
+</section>
+{% endblock %}
