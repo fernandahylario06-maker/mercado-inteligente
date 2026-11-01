@@ -3,7 +3,12 @@
 <section class="hero">
   <p class="eyebrow">MVP · Mercado Rubi</p>
   <h1>Estoque organizado, menos desperdício.</h1>
-  <p>Cadastre produtos, acompanhe lotes e visualize informações importantes para a rotina do estoque.</p>
+  <p>Acompanhe produtos, lotes, movimentações e datas de validade em um só lugar.</p>
   <a class="button-link" href="/produtos">Acessar produtos</a>
+</section>
+<section class="stats">
+  <article class="panel"><span class="muted">Produtos cadastrados</span><strong>{{ product_count }}</strong></article>
+  <article class="panel"><span class="muted">Lotes registrados</span><strong>{{ batch_count }}</strong></article>
+  <article class="panel"><span class="muted">Unidades em estoque</span><strong>{{ stock_total }}</strong></article>
 </section>
 {% endblock %}

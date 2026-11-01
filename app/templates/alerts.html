@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Alertas de validade · Mercado Inteligente{% endblock %}
+{% block content %}
+<h1>Alertas de validade</h1>
+<p class="muted">Lotes com saldo disponível vencidos ou com vencimento nos próximos sete dias.</p>
+<section class="panel">
+{% if batches %}
+<div class="table-wrap"><table><thead><tr><th>Produto</th><th>Lote</th><th>Quantidade</th><th>Validade</th><th>Situação</th></tr></thead><tbody>
+{% for b in batches %}
+<tr><td>{{ b.product.name }}</td><td>{{ b.code }}</td><td>{{ b.quantity }}</td><td>{{ b.expires_at.strftime('%d/%m/%Y') }}</td>
+<td>{% if b.expires_at < today %}<strong class="danger">Vencido</strong>{% else %}<strong class="warning">Próximo do vencimento</strong>{% endif %}</td></tr>
+{% endfor %}
+</tbody></table></div>
+{% else %}<p>Nenhum lote vencido ou próximo do vencimento com saldo disponível.</p>{% endif %}
+</section>
+{% endblock %}
